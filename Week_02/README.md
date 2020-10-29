@@ -31,11 +31,11 @@
 
 + ConcMarkSweepGC PrintGCDetails
     +
-        | UseSerialGC  | 128M  | 256M  | 512M   | 1G     | 2G     | 4G     | 8G     |
-        |--------------|-------|-------|--------|--------|--------|--------|--------|
-        | young GC swt | <10ms | 10ms  | 20ms   | 20ms   | 20ms   | 30ms   | 117ms  |
-        | old GC swt   | 10ms  | <10ms | <10ms  | <10ms  | <10ms  | 10ms   | 12ms   |
-        | object count | OOM   | OOM   | 279046 | 709485 | 723293 | 515322 | 468327 |
+    | UseSerialGC  | 128M  | 256M  | 512M   | 1G     | 2G     | 4G     | 8G     |
+    |--------------|-------|-------|--------|--------|--------|--------|--------|
+    | young GC swt | <10ms | 10ms  | 20ms   | 20ms   | 20ms   | 30ms   | 117ms  |
+    | old GC swt   | 10ms  | <10ms | <10ms  | <10ms  | <10ms  | 10ms   | 12ms   |
+    | object count | OOM   | OOM   | 279046 | 709485 | 723293 | 515322 | 468327 |
 
     + 总结
        + 整体GC稳定 10-20ms内， 但吞吐量降低
