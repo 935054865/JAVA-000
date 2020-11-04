@@ -1,7 +1,6 @@
 package src.main.getway.filter;
 
 import io.netty.handler.codec.http.HttpHeaders;
-import okhttp3.Request;
 
 public class NettyFilterHandler {
 

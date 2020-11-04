@@ -1,6 +1,5 @@
 package src.main.getway.outbound.Netty;
 
-import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -11,7 +10,6 @@ import io.netty.util.CharsetUtil;
 import src.main.getway.filter.NettyFilterHandler;
 
 import java.net.URI;
-import java.nio.charset.Charset;
 
 public class NettyOutboundHandler extends ChannelInboundHandlerAdapter {
 
