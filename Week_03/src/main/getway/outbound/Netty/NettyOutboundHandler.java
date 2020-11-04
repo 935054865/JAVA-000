@@ -33,7 +33,6 @@ public class NettyOutboundHandler extends ChannelInboundHandlerAdapter {
 
 
         request.headers()
-                .set(HttpHeaderNames.CONTENT_TYPE, "text/plain;charset=UTF-8")
                 //开启长连接
                 .set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE)
                 //设置传递请求内容的长度
