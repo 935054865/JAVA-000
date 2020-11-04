@@ -10,6 +10,7 @@ import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpContentDecompressor;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import src.main.getway.config.GetAwayConfig;
+import src.main.getway.router.NettyRouterHandler;
 
 import java.net.InetSocketAddress;
 
@@ -21,7 +22,7 @@ public class NettyHttpClient {
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         try {
             bootstrap.group(eventLoopGroup)
-                    .remoteAddress(new InetSocketAddress(GetAwayConfig.PROXY_SERVER, GetAwayConfig.PROXY_SERVER_PORT))
+                    .remoteAddress(new InetSocketAddress(NettyRouterHandler.getProxyService(), GetAwayConfig.PROXY_SERVER_PORT))
                     //长连接
                     .option(ChannelOption.SO_KEEPALIVE, true)
                     .channel(NioSocketChannel.class)
@@ -47,5 +48,6 @@ public class NettyHttpClient {
             eventLoopGroup.shutdownGracefully();
         }
     }
+
 
 }
