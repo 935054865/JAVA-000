@@ -27,13 +27,10 @@ public class NettyHttpClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel channel) throws Exception {
 
-                            //包含编码器和解码器
                             channel.pipeline().addLast(new HttpClientCodec());
 
-                            //聚合
                             channel.pipeline().addLast(new HttpObjectAggregator(1024 * 10 * 1024));
 
-                            //解压
                             channel.pipeline().addLast(new HttpContentDecompressor());
 
                             channel.pipeline().addLast(new NettyOutboundHandler());
