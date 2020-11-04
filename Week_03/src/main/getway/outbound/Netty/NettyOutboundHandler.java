@@ -18,7 +18,6 @@ public class NettyOutboundHandler extends ChannelInboundHandlerAdapter {
 
         URI url = new URI("/brown-star-manager/api/common/level");
         String meg = "hello world";
-        System.out.println("请求");
         //配置HttpRequest的请求数据和一些配置信息
         FullHttpRequest request = new DefaultFullHttpRequest(
                 HttpVersion.HTTP_1_0
@@ -35,20 +34,20 @@ public class NettyOutboundHandler extends ChannelInboundHandlerAdapter {
                 .set(HttpHeaderNames.CONTENT_LENGTH, request.content().readableBytes());
 
         //发送数据
-        ctx.writeAndFlush(request).addListener(ChannelFutureListener.CLOSE);
+        ctx.writeAndFlush(request);
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("结果");
         FullHttpResponse response = (FullHttpResponse) msg;
 
         ByteBuf content = response.content();
-        HttpHeaders headers = response.headers();
+//        HttpHeaders headers = response.headers();
 
-        System.out.println("content:" + System.getProperty("line.separator") + content.toString(CharsetUtil.UTF_8));
-        System.out.println("headers:" + System.getProperty("line.separator") + headers.toString());
-
+//        System.out.println("content:" + System.getProperty("line.separator") + content.toString(CharsetUtil.UTF_8));
+//        System.out.println("headers:" + System.getProperty("line.separator") + headers.toString());
+        System.out.println(content.toString(CharsetUtil.UTF_8));
+        ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 
 }

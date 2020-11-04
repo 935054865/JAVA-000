@@ -39,6 +39,7 @@ public class NettyHttpClient {
 
             ChannelFuture channelFuture = bootstrap.connect().sync();
             channelFuture.channel().closeFuture().sync();
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
