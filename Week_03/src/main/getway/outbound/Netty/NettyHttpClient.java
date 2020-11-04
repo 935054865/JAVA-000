@@ -15,7 +15,7 @@ import java.net.InetSocketAddress;
 public class NettyHttpClient {
 
 
-    public static void start() throws InterruptedException {
+    public static void start(ChannelHandlerContext serverCtx) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         try {
@@ -33,7 +33,7 @@ public class NettyHttpClient {
 
                             channel.pipeline().addLast(new HttpContentDecompressor());
 
-                            channel.pipeline().addLast(new NettyOutboundHandler());
+                            channel.pipeline().addLast(new NettyOutboundHandler(serverCtx));
                         }
                     });
 

@@ -13,6 +13,12 @@ import java.nio.charset.Charset;
 
 public class NettyOutboundHandler extends ChannelInboundHandlerAdapter {
 
+    ChannelHandlerContext serverCtx;
+
+    public NettyOutboundHandler(ChannelHandlerContext serverCtx) {
+        this.serverCtx = serverCtx;
+    }
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
@@ -39,15 +45,25 @@ public class NettyOutboundHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        FullHttpResponse response = (FullHttpResponse) msg;
+        try {
+            FullHttpResponse response = (FullHttpResponse) msg;
 
-        ByteBuf content = response.content();
+            ByteBuf content = response.content();
 //        HttpHeaders headers = response.headers();
 
 //        System.out.println("content:" + System.getProperty("line.separator") + content.toString(CharsetUtil.UTF_8));
 //        System.out.println("headers:" + System.getProperty("line.separator") + headers.toString());
-        System.out.println(content.toString(CharsetUtil.UTF_8));
-        ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+            System.out.println(content.toString(CharsetUtil.UTF_8));
+            serverCtx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ctx.close();
+        }
+
+
+
+
     }
 
 }

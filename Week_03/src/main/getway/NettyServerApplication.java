@@ -1,4 +1,4 @@
-package src.main;
+package src.main.getway;
 
 import src.main.getway.inbound.HttpInboundServer;
 

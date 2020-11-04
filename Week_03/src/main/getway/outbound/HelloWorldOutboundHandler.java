@@ -12,7 +12,7 @@ public class HelloWorldOutboundHandler {
     public void handle(FullHttpRequest fullRequest, ChannelHandlerContext ctx){
         try {
             FullHttpResponse response = toResponse("hello world", "");
-            ctx.writeAndFlush(response);
+            ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

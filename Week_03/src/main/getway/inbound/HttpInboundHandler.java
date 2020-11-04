@@ -30,7 +30,7 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
             //hello world
 //            FullHttpRequest fullRequest = (FullHttpRequest) msg;
 //            httpOutboundHandler.handle(fullRequest, ctx);
-            NettyHttpClient.start();
+            NettyHttpClient.start(ctx);
 
         } catch(Exception e) {
             e.printStackTrace();
