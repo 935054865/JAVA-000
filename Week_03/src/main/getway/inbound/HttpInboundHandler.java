@@ -2,11 +2,11 @@ package src.main.getway.inbound;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import src.main.getway.outbound.HelloWorldOutboundHandler;
+import src.main.getway.outbound.Netty.NettyHttpClient;
 
 public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
 
@@ -14,7 +14,9 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
     private HelloWorldOutboundHandler httpOutboundHandler;
 
     public HttpInboundHandler() {
-        httpOutboundHandler = new HelloWorldOutboundHandler();
+
+//        httpOutboundHandler = new HelloWorldOutboundHandler();
+//        nettyHttpClient = new NettyHttpClient();
     }
 
     @Override
@@ -25,9 +27,10 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         try {
-            FullHttpRequest fullRequest = (FullHttpRequest) msg;
-
-            httpOutboundHandler.handle(fullRequest, ctx);
+            //hello world
+//            FullHttpRequest fullRequest = (FullHttpRequest) msg;
+//            httpOutboundHandler.handle(fullRequest, ctx);
+            NettyHttpClient.start();
 
         } catch(Exception e) {
             e.printStackTrace();
