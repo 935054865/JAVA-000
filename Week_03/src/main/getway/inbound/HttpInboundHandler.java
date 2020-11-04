@@ -6,15 +6,15 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import src.main.getway.outbound.HttpOutboundHandler;
+import src.main.getway.outbound.HelloWorldOutboundHandler;
 
 public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(HttpInboundHandler.class);
-    private HttpOutboundHandler httpOutboundHandler;
+    private HelloWorldOutboundHandler httpOutboundHandler;
 
     public HttpInboundHandler() {
-        httpOutboundHandler = new HttpOutboundHandler();
+        httpOutboundHandler = new HelloWorldOutboundHandler();
     }
 
     @Override
@@ -27,8 +27,7 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
         try {
             FullHttpRequest fullRequest = (FullHttpRequest) msg;
 
-
-//            httpOutboundHandler.handle(fullRequest, ctx);
+            httpOutboundHandler.handle(fullRequest, ctx);
 
         } catch(Exception e) {
             e.printStackTrace();
