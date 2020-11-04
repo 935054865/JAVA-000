@@ -5,6 +5,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpContentDecompressor;
 import io.netty.handler.codec.http.HttpObjectAggregator;
@@ -15,7 +16,7 @@ import java.net.InetSocketAddress;
 public class NettyHttpClient {
 
 
-    public static void start(ChannelHandlerContext serverCtx) throws InterruptedException {
+    public static void start(ChannelHandlerContext serverCtx, FullHttpRequest fullHttpRequest) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         try {
@@ -33,7 +34,7 @@ public class NettyHttpClient {
 
                             channel.pipeline().addLast(new HttpContentDecompressor());
 
-                            channel.pipeline().addLast(new NettyOutboundHandler(serverCtx));
+                            channel.pipeline().addLast(new NettyOutboundHandler(serverCtx, fullHttpRequest));
                         }
                     });
 
