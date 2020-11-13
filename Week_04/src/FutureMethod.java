@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 public class FutureMethod {
 
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) {
 
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
