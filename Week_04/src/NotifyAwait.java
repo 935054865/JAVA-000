@@ -14,7 +14,7 @@ public class NotifyAwait {
         });
         thread.start();
 
-        int result = aSynchronized.getValue();
+        int result = aSynchronized.getResult();
 
         System.out.println("结果："+result);
 
@@ -34,7 +34,7 @@ public class NotifyAwait {
         return fibo(a-1) + fibo(a-2);
     }
 
-    synchronized private int getValue() throws InterruptedException {
+    synchronized private int getResult() throws InterruptedException {
         while (value == null) {
             wait();
         }
