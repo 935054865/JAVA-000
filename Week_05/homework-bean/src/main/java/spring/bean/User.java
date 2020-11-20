@@ -1,4 +1,4 @@
-package test.spring.bean;
+package spring.bean;
 
 public class User {
 

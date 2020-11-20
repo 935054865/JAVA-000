@@ -1,8 +1,8 @@
-package test.spring.service;
+package spring.service;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
-import test.spring.bean.User;
+import spring.bean.User;
 
 
 
