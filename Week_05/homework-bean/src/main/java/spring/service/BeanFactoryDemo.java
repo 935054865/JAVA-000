@@ -8,7 +8,6 @@ public class BeanFactoryDemo {
 
 
     public static void main(String[] args) {
-        // bean factory
         BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/bean-instantiation-bean-factory.xml");
 
         User user = beanFactory.getBean("user-by-instance-method", User.class);

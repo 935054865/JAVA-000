@@ -1,11 +1,9 @@
 package spring.beanFactory;
 
 import org.springframework.beans.factory.InitializingBean;
-import spring.bean.User;
 
 public class DefaultUserFactory implements UserFactory , InitializingBean {
 
-//    @PostConstruct
     public void init() {
         System.out.println("UserFactory init...");
     }
