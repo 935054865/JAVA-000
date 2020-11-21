@@ -1,4 +1,6 @@
-package springbootstarter
+package springbootstarter;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "custom.boot.starter.student")
 public class StudentProperties {
