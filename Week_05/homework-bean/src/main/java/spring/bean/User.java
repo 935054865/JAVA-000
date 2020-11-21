@@ -12,6 +12,7 @@ public class User {
     }
 
     public void setUserId(Integer userId) {
+        System.out.println("设置userId："+ userId);
         this.userId = userId;
     }
 
@@ -20,7 +21,12 @@ public class User {
     }
 
     public void setUsername(String username) {
+        System.out.println("设置username："+ username);
         this.username = username;
+    }
+
+    public User(){
+        System.out.println("User 被实例化");
     }
 
     public static User createUser() {
@@ -28,6 +34,10 @@ public class User {
         user.setUserId(1);
         user.setUsername("zcs");
         return user;
+    }
+
+    public void start(){
+        System.out.println("自定义初始化的方法....");
     }
 
     @Override
