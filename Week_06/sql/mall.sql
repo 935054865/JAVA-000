@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 25/11/2020 10:16:02
+ Date: 25/11/2020 17:42:31
 */
 
 SET NAMES utf8mb4;
@@ -27,17 +27,17 @@ CREATE TABLE `m_order` (
   `modified_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
   `order_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '订单编号',
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '用户ID',
+  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `user_address_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户配送地址ID',
+  `spu_snapshot_id` int(11) NOT NULL COMMENT '商品快照表ID',
+  `pay_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '付款ID',
   `pay_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '订单支付时间',
   `pay_type` tinyint(4) unsigned NOT NULL COMMENT '订单支付方式 1支付宝 2微信',
   `order_type` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '订单类型：1实物2虚拟品',
-  `activity_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '活动ID',
   `status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '订单状态 0待付款 1已完成 2已取消，3. 支付中，4. 支付失败',
-  `user_address_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户配送地址ID',
   `order_refund_price` decimal(10,2) NOT NULL COMMENT '订单退款金额，单位元，两位小数',
   `pay_amount` decimal(10,2) NOT NULL COMMENT '应付金额',
   `real_pay` decimal(10,2) NOT NULL COMMENT '实付金额',
-  `pay_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '付款ID',
-  `transaction_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT ' ' COMMENT '支付方订单id',
   `is_del` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='订单表';
@@ -83,25 +83,6 @@ CREATE TABLE `m_sku` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品sku价格';
 
 -- ----------------------------
--- Table structure for m_sku_snapshot
--- ----------------------------
-DROP TABLE IF EXISTS `m_sku_snapshot`;
-CREATE TABLE `m_sku_snapshot` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `created_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `modified_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
-  `spu_id` int(11) NOT NULL COMMENT '商品Id',
-  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '规格名称',
-  `img_path` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '规格图片地址',
-  `cost_price` decimal(10,2) NOT NULL COMMENT '成本价',
-  `in_price` decimal(10,2) NOT NULL COMMENT '在售价',
-  `origin_price` decimal(10,2) NOT NULL COMMENT '划线价',
-  `status` tinyint(4) unsigned NOT NULL COMMENT '销售状态 0 仓库中 1售卖中 2已售罄',
-  PRIMARY KEY (`id`),
-  KEY `idx_sku_spu_id` (`spu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品sku价格';
-
--- ----------------------------
 -- Table structure for m_sku_value
 -- ----------------------------
 DROP TABLE IF EXISTS `m_sku_value`;
@@ -120,22 +101,6 @@ CREATE TABLE `m_sku_value` (
   `is_del` tinyint(1) unsigned DEFAULT '0' COMMENT '0未删除 1已删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='规格信息表';
-
--- ----------------------------
--- Table structure for m_sku_value_snapshot
--- ----------------------------
-DROP TABLE IF EXISTS `m_sku_value_snapshot`;
-CREATE TABLE `m_sku_value_snapshot` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `created_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `modified_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
-  `spu_id` int(11) unsigned NOT NULL COMMENT '商品ID m_spu.id',
-  `sku_id` int(11) unsigned NOT NULL COMMENT '商品规格ID m.sku_id',
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '规格值',
-  `status` tinyint(4) unsigned NOT NULL COMMENT '销售状态 0 仓库中 1售卖中 2已售罄',
-  `is_del` tinyint(1) unsigned DEFAULT '0' COMMENT '0未删除 1已删除',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='规格信息快照表';
 
 -- ----------------------------
 -- Table structure for m_spu
@@ -202,21 +167,22 @@ CREATE TABLE `m_spu_snapshot` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `created_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `modified_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
-  `spu_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '商品编号',
+  `order_id` int(11) NOT NULL COMMENT '订单ID',
+  `spu_id` int(11) NOT NULL COMMENT 'spu 商品ID',
+  `sku_id` int(11) NOT NULL COMMENT 'sku_id',
+  `sku_value_id` int(11) NOT NULL COMMENT '商品规格值ID',
   `title` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '商品名称',
   `describe` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品描述 简介',
   `main_photo_path` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '商品主图',
   `shuffling_figure_path` json NOT NULL COMMENT '轮播图地址',
   `spu_class_id` int(11) unsigned NOT NULL COMMENT '商品分类ID',
   `spu_support_id` int(11) unsigned NOT NULL COMMENT '商品支持',
-  `spu_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '销售状态 0 仓库中 1售卖中 2已售罄',
-  `shelves_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '上架方式 1、立即售卖 2、指定时间上架 3、仓库中',
-  `shelves_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上架时间 架为指定时间是 不能为空',
   `shop_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺ID',
+  `sku_name` varchar(30) COLLATE utf8_bin NOT NULL COMMENT '规格名称',
+  `sku_value_name` varchar(30) COLLATE utf8_bin NOT NULL COMMENT '商品规格值名称',
   `is_del` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
-  PRIMARY KEY (`id`),
-  KEY `idx_spu_status` (`spu_status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品表';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品快照表\n';
 
 -- ----------------------------
 -- Table structure for m_user_base
