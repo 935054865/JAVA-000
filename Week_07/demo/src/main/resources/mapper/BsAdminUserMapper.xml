@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mysql.demo.core.dao.BsAdminUserMapper" >
+  <resultMap id="BaseResultMap" type="com.mysql.demo.common.model.BsAdminUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="jd_uid" property="jdUid" jdbcType="VARCHAR" />
+    <result column="pin" property="pin" jdbcType="VARCHAR" />
+    <result column="erp" property="erp" jdbcType="VARCHAR" />
+    <result column="jd_role" property="jdRole" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, jd_uid, pin, erp, jd_role, user_name, is_del, created_time, modified_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bs_admin_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bs_admin_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mysql.demo.common.model.BsAdminUser" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into bs_admin_user (id, jd_uid, pin, 
+      erp, jd_role, user_name, 
+      is_del, created_time, modified_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{jdUid,jdbcType=VARCHAR}, #{pin,jdbcType=VARCHAR}, 
+      #{erp,jdbcType=VARCHAR}, #{jdRole,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{isDel,jdbcType=BIT}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mysql.demo.common.model.BsAdminUser" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into bs_admin_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      id,
+      <if test="jdUid != null" >
+        jd_uid,
+      </if>
+      <if test="pin != null" >
+        pin,
+      </if>
+      <if test="erp != null" >
+        erp,
+      </if>
+      <if test="jdRole != null" >
+        jd_role,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=INTEGER},
+      <if test="jdUid != null" >
+        #{jdUid,jdbcType=VARCHAR},
+      </if>
+      <if test="pin != null" >
+        #{pin,jdbcType=VARCHAR},
+      </if>
+      <if test="erp != null" >
+        #{erp,jdbcType=VARCHAR},
+      </if>
+      <if test="jdRole != null" >
+        #{jdRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mysql.demo.common.model.BsAdminUser" >
+    update bs_admin_user
+    <set >
+      <if test="jdUid != null" >
+        jd_uid = #{jdUid,jdbcType=VARCHAR},
+      </if>
+      <if test="pin != null" >
+        pin = #{pin,jdbcType=VARCHAR},
+      </if>
+      <if test="erp != null" >
+        erp = #{erp,jdbcType=VARCHAR},
+      </if>
+      <if test="jdRole != null" >
+        jd_role = #{jdRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mysql.demo.common.model.BsAdminUser" >
+    update bs_admin_user
+    set jd_uid = #{jdUid,jdbcType=VARCHAR},
+      pin = #{pin,jdbcType=VARCHAR},
+      erp = #{erp,jdbcType=VARCHAR},
+      jd_role = #{jdRole,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
