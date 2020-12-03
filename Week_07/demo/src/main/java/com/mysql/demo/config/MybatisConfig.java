@@ -87,6 +87,8 @@ public class MybatisConfig {
         String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
                 + ClassUtils.convertClassNameToResourcePath(new StandardEnvironment()
                 .resolveRequiredPlaceholders(basePackage)) + "/" + pattern;
+        System.out.println("这里123");
+        System.out.println(packageSearchPath);
         org.springframework.core.io.Resource[] resources = new PathMatchingResourcePatternResolver().getResources(packageSearchPath);
         return resources;
     }
