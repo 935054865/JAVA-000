@@ -15,6 +15,11 @@
     from test
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectAll" resultType="com.shardingspheredb.jdbc.model.Test">
+    select
+    <include refid="Base_Column_List" />
+    from test
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from test
     where id = #{id,jdbcType=INTEGER}

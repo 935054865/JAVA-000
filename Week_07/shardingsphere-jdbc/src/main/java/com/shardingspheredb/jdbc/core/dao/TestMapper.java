@@ -3,6 +3,8 @@ package com.shardingspheredb.jdbc.core.dao;
 import com.shardingspheredb.jdbc.model.Test;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface TestMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +18,6 @@ public interface TestMapper {
     int updateByPrimaryKeySelective(Test record);
 
     int updateByPrimaryKey(Test record);
+
+    List<Test> selectAll();
 }
