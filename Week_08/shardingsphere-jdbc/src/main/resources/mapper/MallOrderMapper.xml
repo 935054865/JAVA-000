@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shardingsphere.order.core.dao.MallOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.shardingsphere.order.model.MallOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="created_time" property="createdTime" jdbcType="INTEGER" />
+    <result column="modified_time" property="modifiedTime" jdbcType="INTEGER" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="user_address_id" property="userAddressId" jdbcType="INTEGER" />
+    <result column="spu_snapshot_id" property="spuSnapshotId" jdbcType="INTEGER" />
+    <result column="pay_id" property="payId" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="INTEGER" />
+    <result column="pay_type" property="payType" jdbcType="TINYINT" />
+    <result column="order_type" property="orderType" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="order_refund_price" property="orderRefundPrice" jdbcType="DECIMAL" />
+    <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+    <result column="real_pay" property="realPay" jdbcType="DECIMAL" />
+    <result column="is_del" property="isDel" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, created_time, modified_time, order_code, user_id, shop_id, user_address_id, spu_snapshot_id, 
+    pay_id, pay_time, pay_type, order_type, `status`, order_refund_price, pay_amount, 
+    real_pay, is_del
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from mall_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from mall_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shardingsphere.order.model.MallOrder" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into mall_order (id, created_time, modified_time, 
+      order_code, user_id, shop_id, 
+      user_address_id, spu_snapshot_id, pay_id, 
+      pay_time, pay_type, order_type, 
+      `status`, order_refund_price, pay_amount, 
+      real_pay, is_del)
+    values (#{id,jdbcType=BIGINT}, #{createdTime,jdbcType=INTEGER}, #{modifiedTime,jdbcType=INTEGER}, 
+      #{orderCode,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, 
+      #{userAddressId,jdbcType=INTEGER}, #{spuSnapshotId,jdbcType=INTEGER}, #{payId,jdbcType=VARCHAR}, 
+      #{payTime,jdbcType=INTEGER}, #{payType,jdbcType=TINYINT}, #{orderType,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{orderRefundPrice,jdbcType=DECIMAL}, #{payAmount,jdbcType=DECIMAL}, 
+      #{realPay,jdbcType=DECIMAL}, #{isDel,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shardingsphere.order.model.MallOrder" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into mall_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      id,
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="userAddressId != null" >
+        user_address_id,
+      </if>
+      <if test="spuSnapshotId != null" >
+        spu_snapshot_id,
+      </if>
+      <if test="payId != null" >
+        pay_id,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="orderRefundPrice != null" >
+        order_refund_price,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="realPay != null" >
+        real_pay,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="userAddressId != null" >
+        #{userAddressId,jdbcType=INTEGER},
+      </if>
+      <if test="spuSnapshotId != null" >
+        #{spuSnapshotId,jdbcType=INTEGER},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=TINYINT},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="orderRefundPrice != null" >
+        #{orderRefundPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="realPay != null" >
+        #{realPay,jdbcType=DECIMAL},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shardingsphere.order.model.MallOrder" >
+    update mall_order
+    <set >
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time = #{modifiedTime,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="userAddressId != null" >
+        user_address_id = #{userAddressId,jdbcType=INTEGER},
+      </if>
+      <if test="spuSnapshotId != null" >
+        spu_snapshot_id = #{spuSnapshotId,jdbcType=INTEGER},
+      </if>
+      <if test="payId != null" >
+        pay_id = #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=TINYINT},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="orderRefundPrice != null" >
+        order_refund_price = #{orderRefundPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="realPay != null" >
+        real_pay = #{realPay,jdbcType=DECIMAL},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shardingsphere.order.model.MallOrder" >
+    update mall_order
+    set created_time = #{createdTime,jdbcType=INTEGER},
+      modified_time = #{modifiedTime,jdbcType=INTEGER},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      user_address_id = #{userAddressId,jdbcType=INTEGER},
+      spu_snapshot_id = #{spuSnapshotId,jdbcType=INTEGER},
+      pay_id = #{payId,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=INTEGER},
+      pay_type = #{payType,jdbcType=TINYINT},
+      order_type = #{orderType,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=TINYINT},
+      order_refund_price = #{orderRefundPrice,jdbcType=DECIMAL},
+      pay_amount = #{payAmount,jdbcType=DECIMAL},
+      real_pay = #{realPay,jdbcType=DECIMAL},
+      is_del = #{isDel,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from mall_order
+  </select>
+</mapper>

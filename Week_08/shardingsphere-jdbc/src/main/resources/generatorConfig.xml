@@ -27,7 +27,7 @@
         </javaTypeResolver>
 
         <javaModelGenerator targetPackage="com.shardingsphere.order.model"
-                            targetProject="/Users/zcs/GitHub/JAVA-000/Week_08/shardingsphere-jdbc/src/main/java/com/shardingsphere/order/model">
+                            targetProject="/Users/zcs/GitHub/JAVA-000/Week_08/shardingsphere-jdbc/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -38,13 +38,13 @@
         </sqlMapGenerator>
 
         <javaClientGenerator targetPackage="com.shardingsphere.order.core.dao"
-                             targetProject="/Users/zcs/GitHub/JAVA-000/Week_08/shardingsphere-jdbc/src/main/java/com/shardingsphere/order/core/dao"
+                             targetProject="/Users/zcs/GitHub/JAVA-000/Week_08/shardingsphere-jdbc/src/main/java"
                              type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
-        <table tableName="test" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        <table tableName="mall_order" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="Mysql"/>
         </table>
 
