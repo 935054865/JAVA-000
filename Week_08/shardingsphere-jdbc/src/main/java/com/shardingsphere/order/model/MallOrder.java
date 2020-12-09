@@ -1,8 +1,14 @@
 package com.shardingsphere.order.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.math.BigDecimal;
 
+@TableName("mall_order")
 public class MallOrder {
+
     private Long id;
 
     private Integer createdTime;
@@ -11,7 +17,7 @@ public class MallOrder {
 
     private String orderCode;
 
-    private String userId;
+    private Long userId;
 
     private Integer shopId;
 
@@ -69,12 +75,12 @@ public class MallOrder {
         this.orderCode = orderCode == null ? null : orderCode.trim();
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Integer getShopId() {

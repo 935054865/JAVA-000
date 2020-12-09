@@ -18,4 +18,9 @@ public class OrderServiceImpl implements IOrderService {
     public List<MallOrder> list() {
         return mallOrderMapper.selectAll();
     }
+
+    @Override
+    public void insert(MallOrder mallOrder) {
+        mallOrderMapper.insertSelective(mallOrder);
+    }
 }

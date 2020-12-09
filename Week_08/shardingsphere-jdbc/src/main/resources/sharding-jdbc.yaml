@@ -19,7 +19,7 @@ rules:
     tables:
       # 配置 mall_order 表规则
       mall_order:
-        actualDataNodes: order.mall_order${0..1}
+        actualDataNodes: order${0..1}.mall_order${0..1}
         # 配置分库策略
         databaseStrategy:
           standard:
@@ -30,6 +30,7 @@ rules:
           standard:
             shardingColumn: id
             shardingAlgorithmName: table_inline
+
 
     # 配置分片算法
     shardingAlgorithms:

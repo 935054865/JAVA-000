@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface IOrderService {
     List<MallOrder> list();
+
+    void insert(MallOrder mallOrder);
 }

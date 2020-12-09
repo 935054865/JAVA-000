@@ -6,7 +6,7 @@
     <result column="created_time" property="createdTime" jdbcType="INTEGER" />
     <result column="modified_time" property="modifiedTime" jdbcType="INTEGER" />
     <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="shop_id" property="shopId" jdbcType="INTEGER" />
     <result column="user_address_id" property="userAddressId" jdbcType="INTEGER" />
     <result column="spu_snapshot_id" property="spuSnapshotId" jdbcType="INTEGER" />
@@ -46,16 +46,13 @@
       `status`, order_refund_price, pay_amount, 
       real_pay, is_del)
     values (#{id,jdbcType=BIGINT}, #{createdTime,jdbcType=INTEGER}, #{modifiedTime,jdbcType=INTEGER}, 
-      #{orderCode,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, 
+      #{orderCode,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{shopId,jdbcType=INTEGER},
       #{userAddressId,jdbcType=INTEGER}, #{spuSnapshotId,jdbcType=INTEGER}, #{payId,jdbcType=VARCHAR}, 
       #{payTime,jdbcType=INTEGER}, #{payType,jdbcType=TINYINT}, #{orderType,jdbcType=TINYINT}, 
       #{status,jdbcType=TINYINT}, #{orderRefundPrice,jdbcType=DECIMAL}, #{payAmount,jdbcType=DECIMAL}, 
       #{realPay,jdbcType=DECIMAL}, #{isDel,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.shardingsphere.order.model.MallOrder" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into mall_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       id,
@@ -120,7 +117,7 @@
         #{orderCode,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="shopId != null" >
         #{shopId,jdbcType=INTEGER},
@@ -173,7 +170,7 @@
         order_code = #{orderCode,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
       <if test="shopId != null" >
         shop_id = #{shopId,jdbcType=INTEGER},
@@ -219,7 +216,7 @@
     set created_time = #{createdTime,jdbcType=INTEGER},
       modified_time = #{modifiedTime,jdbcType=INTEGER},
       order_code = #{orderCode,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
       shop_id = #{shopId,jdbcType=INTEGER},
       user_address_id = #{userAddressId,jdbcType=INTEGER},
       spu_snapshot_id = #{spuSnapshotId,jdbcType=INTEGER},
@@ -235,9 +232,5 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from mall_order
-  </select>
+
 </mapper>
