@@ -16,41 +16,22 @@ public final class Zmq {
     }
 
     private String topic;
-    private int capacity;
-    private ZmqMessage[] queue;
+    private final int capacity;
+    private final ZmqMessage[] queue;
     private int producerOffset = 0;
     private int consumerOffset = 0;
     private int producerDepth = 0;
-    private int consumerDepth = capacity;
-    /**
-     * 锁
-     */
-    private Lock lock = new ReentrantLock();
-
-    /**
-     * 基于lock的 队列没有满 的条件。
-     * 用于：队列满时 阻塞（await()）,不满时唤醒（signal()）
-     */
-    private Condition notFull = lock.newCondition();
-
-    /**
-     * 基于lock的 队列没有空 的条件。
-     * 用于：队列空时 阻塞（await()）,不空时唤醒（signal()）
-     */
-    private Condition notEmpty = lock.newCondition();
+    private final Lock lock = new ReentrantLock();
+    private final Condition producerFull = lock.newCondition();
+    private final Condition consumerEmpty = lock.newCondition();
 
 
-    /**
-     * 单线程版
-     * @param message
-     * @return
-     */
 
     public boolean sendMessage(ZmqMessage message) {
         lock.lock();
         try {
             while (producerDepth >= capacity) {
-                notFull.await();
+                producerFull.await();
             }
             if (producerOffset >= capacity) {
                 producerOffset = 0;
@@ -60,6 +41,7 @@ public final class Zmq {
             }
             producerOffset++;
             producerDepth++;
+            consumerEmpty.signal();
             return true;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -76,7 +58,7 @@ public final class Zmq {
         lock.lock();
         try {
             while (producerDepth <= 0) {
-                notFull.await();
+                consumerEmpty.await();
             }
             if (consumerOffset >= capacity) {
                 consumerOffset = 0;
@@ -85,7 +67,7 @@ public final class Zmq {
             this.queue[consumerOffset] = null;
             consumerOffset ++;
             producerDepth --;
-            notFull.signal();
+            producerFull.signal();
             return zmqMessage;
         } catch (InterruptedException e) {
             e.printStackTrace();
